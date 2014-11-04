@@ -55,6 +55,20 @@ and you would use it like so
     INFO  [alembic.migration] Running upgrade 4358d1b8cc75 -> 1284c81cf727, 
     create lswitch and lswitch port orphaned tables
 
+Database Migration version problem 
+
+    -Create new version file and give the version number from alembic_version table
+    example :
+        revision = '1f71e54a85e7'
+        down_revision = None
+    And then in initial_version.py file down_revision should be set to version number from alembic_version table
+    example:    
+        revision = '1817eef6373c'
+        down_revision = '1f71e54a85e7'
+        
+    then run migrations upgrats head 
+        example:
+            quark-db-manage --config-file /etc/neutron/neutron.conf upgrade HEAD
 
 Workflow for creating a revision
 ================================
@@ -62,3 +76,4 @@ Workflow for creating a revision
 1. Modify quark/db/models.py with your added table/columns.
 2. Run ``quark-db-manage ... upgrade head``.
 3. Run ``quark-db-manage ... revision --autogenerate``.
+
